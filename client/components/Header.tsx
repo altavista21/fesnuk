@@ -2,6 +2,7 @@ import { Search, MessageCircle, Bell, Users, Settings } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { ProfileSettings } from "./ProfileSettings";
+import { MessagesModal } from "./MessagesModal";
 import { useUser } from "@/context/UserContext";
 import { useNotifications } from "@/context/NotificationContext";
 import {
@@ -12,6 +13,7 @@ import {
 
 export function Header() {
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [messagesOpen, setMessagesOpen] = useState(false);
   const { username } = useUser();
   const { notifications, notificationCount, clearAllNotifications } = useNotifications();
 
@@ -33,7 +35,12 @@ export function Header() {
           </div>
 
           <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="relative">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative"
+              onClick={() => setMessagesOpen(true)}
+            >
               <MessageCircle className="w-5 h-5" />
             </Button>
 
@@ -101,6 +108,7 @@ export function Header() {
         </div>
       </header>
       <ProfileSettings open={settingsOpen} onOpenChange={setSettingsOpen} />
+      <MessagesModal open={messagesOpen} onOpenChange={setMessagesOpen} />
     </>
   );
 }
