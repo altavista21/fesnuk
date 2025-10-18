@@ -15,6 +15,7 @@ import Groups from "./pages/Groups";
 import Pages from "./pages/Pages";
 import { UserProvider } from "@/context/UserContext";
 import { NotificationProvider } from "@/context/NotificationContext";
+import { MessagingProvider } from "@/context/MessagingContext";
 
 const queryClient = new QueryClient();
 
