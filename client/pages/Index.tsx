@@ -81,13 +81,14 @@ export default function Index() {
   const [posts, setPosts] = useState<FeedPost[]>(initialPosts);
   const { username } = useUser();
 
-  const handleNewPost = (content: string) => {
+  const handleNewPost = (content: string, image?: string) => {
     const newPost: FeedPost = {
       id: posts.length + 1,
       author: username,
       avatar: username.split(' ').map(n => n[0]).join('').toUpperCase(),
       timestamp: "now",
       content,
+      image,
       likes: 0,
       comments: 0,
       shares: 0,
