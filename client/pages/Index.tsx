@@ -78,12 +78,29 @@ const initialPosts: FeedPost[] = [
 ];
 
 export default function Index() {
+  const [posts, setPosts] = useState<FeedPost[]>(initialPosts);
+  const { username } = useUser();
+
+  const handleNewPost = (content: string) => {
+    const newPost: FeedPost = {
+      id: posts.length + 1,
+      author: username,
+      avatar: username.split(' ').map(n => n[0]).join('').toUpperCase(),
+      timestamp: "now",
+      content,
+      likes: 0,
+      comments: 0,
+      shares: 0,
+    };
+    setPosts([newPost, ...posts]);
+  };
+
   return (
     <Layout>
       <div className="p-4 md:p-6">
-        <PostComposer />
+        <PostComposer onPost={handleNewPost} />
         <div className="space-y-4">
-          {feedPosts.map((post) => (
+          {posts.map((post) => (
             <Post key={post.id} {...post} />
           ))}
         </div>
