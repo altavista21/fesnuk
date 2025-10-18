@@ -3,10 +3,17 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import { ProfileSettings } from "./ProfileSettings";
 import { useUser } from "@/context/UserContext";
+import { useNotifications } from "@/context/NotificationContext";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export function Header() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const { username } = useUser();
+  const { notifications, notificationCount, clearAllNotifications } = useNotifications();
 
   return (
     <>
@@ -29,12 +36,54 @@ export function Header() {
             <Button variant="ghost" size="icon" className="relative">
               <MessageCircle className="w-5 h-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                3
-              </span>
-            </Button>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <Bell className="w-5 h-5" />
+                  {notificationCount > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
+                      {notificationCount > 9 ? "9+" : notificationCount}
+                    </span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent align="end" className="w-80">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-gray-900">Notifications</h3>
+                    {notificationCount > 0 && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={clearAllNotifications}
+                        className="text-xs"
+                      >
+                        Clear all
+                      </Button>
+                    )}
+                  </div>
+                  {notifications.length === 0 ? (
+                    <p className="text-sm text-gray-600 text-center py-4">No notifications yet</p>
+                  ) : (
+                    <div className="space-y-2 max-h-96 overflow-y-auto">
+                      {notifications.map((notif) => (
+                        <div
+                          key={notif.id}
+                          className="p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
+                        >
+                          <p className="text-sm text-gray-800">{notif.message}</p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {notif.timestamp.toLocaleTimeString()}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </PopoverContent>
+            </Popover>
+
             <Button variant="ghost" size="icon">
               <Users className="w-5 h-5" />
             </Button>
