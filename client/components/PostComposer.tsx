@@ -1,4 +1,4 @@
-import { Image, Smile, X } from "lucide-react";
+import { Image, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { useRef, useState } from "react";
 import { useUser } from "@/context/UserContext";
@@ -110,13 +110,6 @@ export function PostComposer({ onPost }: PostComposerProps) {
         >
           <Image className="w-5 h-5 text-primary" />
           <span className="text-sm">Photo/Video</span>
-        </Button>
-        <Button
-          variant="ghost"
-          className="flex-1 justify-center gap-2 text-gray-700 hover:bg-gray-50"
-        >
-          <Smile className="w-5 h-5 text-orange-400" />
-          <span className="text-sm">Feeling</span>
         </Button>
         <Button
           className="flex-1 justify-center gap-2 bg-primary hover:bg-primary/90 text-white"
