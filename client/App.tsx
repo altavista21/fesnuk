@@ -20,28 +20,30 @@ import { MessagingProvider } from "@/context/MessagingContext";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <NotificationProvider>
-    <UserProvider>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/friends" element={<Friends />} />
-              <Route path="/watch" element={<Watch />} />
-              <Route path="/marketplace" element={<Marketplace />} />
-              <Route path="/groups" element={<Groups />} />
-              <Route path="/pages" element={<Pages />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </QueryClientProvider>
-    </UserProvider>
-  </NotificationProvider>
+  <MessagingProvider>
+    <NotificationProvider>
+      <UserProvider>
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/friends" element={<Friends />} />
+                <Route path="/watch" element={<Watch />} />
+                <Route path="/marketplace" element={<Marketplace />} />
+                <Route path="/groups" element={<Groups />} />
+                <Route path="/pages" element={<Pages />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </UserProvider>
+    </NotificationProvider>
+  </MessagingProvider>
 );
 
 createRoot(document.getElementById("root")!).render(<App />);
