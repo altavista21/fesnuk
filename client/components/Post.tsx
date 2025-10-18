@@ -33,6 +33,34 @@ export function Post({ id, author, avatar, timestamp, content: initialContent, i
 
   const handleSaveEdit = (newContent: string) => {
     setContent(newContent);
+    toast.success("Post updated!");
+  };
+
+  const handleLike = () => {
+    const newIsLiked = !isLiked;
+    setIsLiked(newIsLiked);
+
+    if (newIsLiked) {
+      setLikeCount(likeCount + 1);
+      addNotification({
+        type: "like",
+        message: `${author}'s post got a new like!`,
+        postId: id,
+      });
+      toast.success("Liked! 👍");
+    } else {
+      setLikeCount(Math.max(0, likeCount - 1));
+    }
+  };
+
+  const handleComment = () => {
+    setCommentCount(commentCount + 1);
+    addNotification({
+      type: "comment",
+      message: `New comment on ${author}'s post`,
+      postId: id,
+    });
+    toast.success("Comment added!");
   };
 
   return (
@@ -76,8 +104,8 @@ export function Post({ id, author, avatar, timestamp, content: initialContent, i
         </div>
 
         <div className="px-4 py-3 border-y border-gray-100 text-xs text-gray-600 flex gap-4">
-          <span className="cursor-pointer hover:underline">{likes} likes</span>
-          <span className="cursor-pointer hover:underline">{comments} comments</span>
+          <span className="cursor-pointer hover:underline">{likeCount} likes</span>
+          <span className="cursor-pointer hover:underline">{commentCount} comments</span>
           <span className="cursor-pointer hover:underline">{shares} shares</span>
         </div>
 
@@ -85,12 +113,16 @@ export function Post({ id, author, avatar, timestamp, content: initialContent, i
           <Button
             variant="ghost"
             className="flex-1 justify-center gap-2 text-gray-700 hover:bg-gray-50"
-            onClick={() => setIsLiked(!isLiked)}
+            onClick={handleLike}
           >
             <Heart className={`w-5 h-5 ${isLiked ? "fill-red-500 text-red-500" : ""}`} />
             <span className="text-sm">Like</span>
           </Button>
-          <Button variant="ghost" className="flex-1 justify-center gap-2 text-gray-700 hover:bg-gray-50">
+          <Button
+            variant="ghost"
+            className="flex-1 justify-center gap-2 text-gray-700 hover:bg-gray-50"
+            onClick={handleComment}
+          >
             <MessageCircle className="w-5 h-5" />
             <span className="text-sm">Comment</span>
           </Button>
