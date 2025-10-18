@@ -2,6 +2,8 @@ import { Heart, MessageCircle, Share2, MoreHorizontal, Edit2 } from "lucide-reac
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { EditPostDialog } from "./EditPostDialog";
+import { useNotifications } from "@/context/NotificationContext";
+import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,10 +23,13 @@ interface PostProps {
   shares: number;
 }
 
-export function Post({ id, author, avatar, timestamp, content: initialContent, image, likes, comments, shares }: PostProps) {
+export function Post({ id, author, avatar, timestamp, content: initialContent, image, likes: initialLikes, comments: initialComments, shares }: PostProps) {
   const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(initialLikes);
+  const [commentCount, setCommentCount] = useState(initialComments);
   const [editOpen, setEditOpen] = useState(false);
   const [content, setContent] = useState(initialContent);
+  const { addNotification } = useNotifications();
 
   const handleSaveEdit = (newContent: string) => {
     setContent(newContent);
