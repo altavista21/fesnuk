@@ -1,8 +1,22 @@
 import { Layout } from "@/components/Layout";
 import { PostComposer } from "@/components/PostComposer";
 import { Post } from "@/components/Post";
+import { useState } from "react";
+import { useUser } from "@/context/UserContext";
 
-const feedPosts = [
+interface FeedPost {
+  id: number;
+  author: string;
+  avatar: string;
+  timestamp: string;
+  content: string;
+  image?: string;
+  likes: number;
+  comments: number;
+  shares: number;
+}
+
+const initialPosts: FeedPost[] = [
   {
     id: 1,
     author: "Sarah Johnson",
