@@ -1,6 +1,13 @@
-import { Heart, MessageCircle, Share2, MoreHorizontal } from "lucide-react";
+import { Heart, MessageCircle, Share2, MoreHorizontal, Edit2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { EditPostDialog } from "./EditPostDialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface PostProps {
   id: number;
@@ -14,8 +21,10 @@ interface PostProps {
   shares: number;
 }
 
-export function Post({ author, avatar, timestamp, content, image, likes, comments, shares }: PostProps) {
+export function Post({ id, author, avatar, timestamp, content: initialContent, image, likes, comments, shares }: PostProps) {
   const [isLiked, setIsLiked] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [content, setContent] = useState(initialContent);
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 mb-4 overflow-hidden">
