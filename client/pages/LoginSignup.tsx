@@ -112,22 +112,6 @@ export default function LoginSignup() {
               </button>
             </p>
           </div>
-
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-xs text-gray-500 text-center mb-3">
-              Demo Credentials:
-            </p>
-            <div className="bg-gray-50 rounded p-3 space-y-2 text-xs">
-              <div>
-                <p className="font-semibold text-gray-700">Email:</p>
-                <p className="text-gray-600">demo@fesnuk.com</p>
-              </div>
-              <div>
-                <p className="font-semibold text-gray-700">Password:</p>
-                <p className="text-gray-600">demo123</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
