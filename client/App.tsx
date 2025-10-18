@@ -13,28 +13,31 @@ import Watch from "./pages/Watch";
 import Marketplace from "./pages/Marketplace";
 import Groups from "./pages/Groups";
 import Pages from "./pages/Pages";
+import { UserProvider } from "@/context/UserContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/friends" element={<Friends />} />
-          <Route path="/watch" element={<Watch />} />
-          <Route path="/marketplace" element={<Marketplace />} />
-          <Route path="/groups" element={<Groups />} />
-          <Route path="/pages" element={<Pages />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <UserProvider>
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/friends" element={<Friends />} />
+            <Route path="/watch" element={<Watch />} />
+            <Route path="/marketplace" element={<Marketplace />} />
+            <Route path="/groups" element={<Groups />} />
+            <Route path="/pages" element={<Pages />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </UserProvider>
 );
 
 createRoot(document.getElementById("root")!).render(<App />);
