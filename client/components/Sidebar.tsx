@@ -17,7 +17,7 @@ function SidebarItem({ icon, label, href, active }: SidebarItemProps) {
         "flex items-center gap-4 px-4 py-3 rounded-lg transition-colors",
         active
           ? "bg-primary/10 text-primary font-semibold"
-          : "text-gray-700 hover:bg-gray-100"
+          : "text-gray-700 hover:bg-gray-100",
       )}
     >
       {icon}

@@ -8,7 +8,11 @@ interface PlaceholderProps {
   icon: React.ReactNode;
 }
 
-export default function Placeholder({ title, description, icon }: PlaceholderProps) {
+export default function Placeholder({
+  title,
+  description,
+  icon,
+}: PlaceholderProps) {
   const navigate = useNavigate();
 
   return (
@@ -19,7 +23,10 @@ export default function Placeholder({ title, description, icon }: PlaceholderPro
             <div className="text-6xl mb-4 opacity-30">{icon}</div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">{title}</h1>
             <p className="text-gray-600 mb-6 max-w-md">{description}</p>
-            <Button onClick={() => navigate("/")} className="bg-primary hover:bg-primary/90">
+            <Button
+              onClick={() => navigate("/")}
+              className="bg-primary hover:bg-primary/90"
+            >
               Back to Home
             </Button>
           </div>

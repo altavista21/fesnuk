@@ -16,7 +16,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const savedUsername = localStorage.getItem("fesnuk_username");
     const savedBgColor = localStorage.getItem("fesnuk_bgColor");
-    
+
     if (savedUsername) setUsername(savedUsername);
     if (savedBgColor) setBackgroundColor(savedBgColor);
   }, []);
@@ -30,7 +30,9 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   }, [backgroundColor]);
 
   return (
-    <UserContext.Provider value={{ username, setUsername, backgroundColor, setBackgroundColor }}>
+    <UserContext.Provider
+      value={{ username, setUsername, backgroundColor, setBackgroundColor }}
+    >
       {children}
     </UserContext.Provider>
   );

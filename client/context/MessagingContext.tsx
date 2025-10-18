@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 
 export interface Message {
   id: string;
@@ -21,11 +27,16 @@ interface MessagingContextType {
   currentConversation: Conversation | null;
   setCurrentConversation: (conversation: Conversation | null) => void;
   sendMessage: (conversationId: string, text: string) => void;
-  createConversation: (participantName: string, participantAvatar: string) => void;
+  createConversation: (
+    participantName: string,
+    participantAvatar: string,
+  ) => void;
   markAsRead: (conversationId: string) => void;
 }
 
-const MessagingContext = createContext<MessagingContextType | undefined>(undefined);
+const MessagingContext = createContext<MessagingContextType | undefined>(
+  undefined,
+);
 
 const defaultContacts = [
   { name: "Sarah Johnson", avatar: "SJ" },
@@ -36,7 +47,8 @@ const defaultContacts = [
 
 export function MessagingProvider({ children }: { children: React.ReactNode }) {
   const [conversations, setConversations] = useState<Conversation[]>([]);
-  const [currentConversation, setCurrentConversation] = useState<Conversation | null>(null);
+  const [currentConversation, setCurrentConversation] =
+    useState<Conversation | null>(null);
 
   useEffect(() => {
     const savedConversations = localStorage.getItem("fesnuk_conversations");
@@ -49,18 +61,23 @@ export function MessagingProvider({ children }: { children: React.ReactNode }) {
           timestamp: new Date(msg.timestamp),
         })),
         lastMessage: conv.lastMessage
-          ? { ...conv.lastMessage, timestamp: new Date(conv.lastMessage.timestamp) }
+          ? {
+              ...conv.lastMessage,
+              timestamp: new Date(conv.lastMessage.timestamp),
+            }
           : undefined,
       }));
       setConversations(withDates);
     } else {
-      const initialConversations: Conversation[] = defaultContacts.map((contact) => ({
-        id: contact.name.toLowerCase().replace(/\s+/g, "_"),
-        participantName: contact.name,
-        participantAvatar: contact.avatar,
-        messages: [],
-        unreadCount: 0,
-      }));
+      const initialConversations: Conversation[] = defaultContacts.map(
+        (contact) => ({
+          id: contact.name.toLowerCase().replace(/\s+/g, "_"),
+          participantName: contact.name,
+          participantAvatar: contact.avatar,
+          messages: [],
+          unreadCount: 0,
+        }),
+      );
       setConversations(initialConversations);
     }
   }, []);
@@ -69,12 +86,32 @@ export function MessagingProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("fesnuk_conversations", JSON.stringify(conversations));
   }, [conversations]);
 
-  const sendMessage = useCallback((conversationId: string, text: string) => {
-    if (!text.trim()) return;
+  const sendMessage = useCallback(
+    (conversationId: string, text: string) => {
+      if (!text.trim()) return;
 
-    setConversations((prev) =>
-      prev.map((conv) => {
-        if (conv.id === conversationId) {
+      setConversations((prev) =>
+        prev.map((conv) => {
+          if (conv.id === conversationId) {
+            const newMessage: Message = {
+              id: Math.random().toString(36).substr(2, 9),
+              senderId: "you",
+              text,
+              timestamp: new Date(),
+            };
+            return {
+              ...conv,
+              messages: [...conv.messages, newMessage],
+              lastMessage: newMessage,
+            };
+          }
+          return conv;
+        }),
+      );
+
+      if (currentConversation?.id === conversationId) {
+        setCurrentConversation((prev) => {
+          if (!prev) return null;
           const newMessage: Message = {
             id: Math.random().toString(36).substr(2, 9),
             senderId: "you",
@@ -82,68 +119,51 @@ export function MessagingProvider({ children }: { children: React.ReactNode }) {
             timestamp: new Date(),
           };
           return {
-            ...conv,
-            messages: [...conv.messages, newMessage],
+            ...prev,
+            messages: [...prev.messages, newMessage],
             lastMessage: newMessage,
           };
-        }
-        return conv;
-      })
-    );
-
-    if (currentConversation?.id === conversationId) {
-      setCurrentConversation((prev) => {
-        if (!prev) return null;
-        const newMessage: Message = {
-          id: Math.random().toString(36).substr(2, 9),
-          senderId: "you",
-          text,
-          timestamp: new Date(),
-        };
-        return {
-          ...prev,
-          messages: [...prev.messages, newMessage],
-          lastMessage: newMessage,
-        };
-      });
-
-      setTimeout(() => {
-        setConversations((prev) =>
-          prev.map((conv) => {
-            if (conv.id === conversationId) {
-              const replyMessage: Message = {
-                id: Math.random().toString(36).substr(2, 9),
-                senderId: conv.participantName,
-                text: "Thanks for your message! 👋",
-                timestamp: new Date(),
-              };
-              return {
-                ...conv,
-                messages: [...conv.messages, replyMessage],
-                lastMessage: replyMessage,
-              };
-            }
-            return conv;
-          })
-        );
-
-        setCurrentConversation((prev) => {
-          if (!prev) return null;
-          const replyMessage: Message = {
-            id: Math.random().toString(36).substr(2, 9),
-            senderId: prev.participantName,
-            text: "Thanks for your message! 👋",
-            timestamp: new Date(),
-          };
-          return {
-            ...prev,
-            messages: [...prev.messages, replyMessage],
-            lastMessage: replyMessage,
-          };
         });
-      }, 1000);
-    }
-  }, [currentConversation]);
+
+        setTimeout(() => {
+          setConversations((prev) =>
+            prev.map((conv) => {
+              if (conv.id === conversationId) {
+                const replyMessage: Message = {
+                  id: Math.random().toString(36).substr(2, 9),
+                  senderId: conv.participantName,
+                  text: "Thanks for your message! 👋",
+                  timestamp: new Date(),
+                };
+                return {
+                  ...conv,
+                  messages: [...conv.messages, replyMessage],
+                  lastMessage: replyMessage,
+                };
+              }
+              return conv;
+            }),
+          );
+
+          setCurrentConversation((prev) => {
+            if (!prev) return null;
+            const replyMessage: Message = {
+              id: Math.random().toString(36).substr(2, 9),
+              senderId: prev.participantName,
+              text: "Thanks for your message! 👋",
+              timestamp: new Date(),
+            };
+            return {
+              ...prev,
+              messages: [...prev.messages, replyMessage],
+              lastMessage: replyMessage,
+            };
+          });
+        }, 1000);
+      }
+    },
+    [currentConversation],
+  );
 
   const createConversation = useCallback(
     (participantName: string, participantAvatar: string) => {
@@ -161,14 +181,14 @@ export function MessagingProvider({ children }: { children: React.ReactNode }) {
         setConversations((prev) => [newConversation, ...prev]);
       }
     },
-    [conversations]
+    [conversations],
   );
 
   const markAsRead = useCallback((conversationId: string) => {
     setConversations((prev) =>
       prev.map((conv) =>
-        conv.id === conversationId ? { ...conv, unreadCount: 0 } : conv
-      )
+        conv.id === conversationId ? { ...conv, unreadCount: 0 } : conv,
+      ),
     );
   }, []);
 

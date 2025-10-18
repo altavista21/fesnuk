@@ -15,7 +15,13 @@ const suggestions = [
   { id: 3, name: "Jordan Lee", mutualFriends: 5, avatar: "JL" },
 ];
 
-function AvatarBadge({ initials, online }: { initials: string; online?: boolean }) {
+function AvatarBadge({
+  initials,
+  online,
+}: {
+  initials: string;
+  online?: boolean;
+}) {
   return (
     <div className="relative">
       <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-white text-xs font-bold">
@@ -45,10 +51,17 @@ export function RightSidebar() {
               className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-lg cursor-pointer group"
             >
               <div className="flex items-center gap-3 flex-1">
-                <AvatarBadge initials={contact.avatar} online={contact.online} />
+                <AvatarBadge
+                  initials={contact.avatar}
+                  online={contact.online}
+                />
                 <span className="text-sm text-gray-800">{contact.name}</span>
               </div>
-              <Button variant="ghost" size="icon" className="h-8 w-8 opacity-0 group-hover:opacity-100">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 opacity-0 group-hover:opacity-100"
+              >
                 <MessageCircle className="w-4 h-4" />
               </Button>
             </div>
@@ -57,7 +70,9 @@ export function RightSidebar() {
       </div>
 
       <div className="pt-4 border-t border-gray-200">
-        <h3 className="font-semibold text-gray-900 mb-4">Suggestions For You</h3>
+        <h3 className="font-semibold text-gray-900 mb-4">
+          Suggestions For You
+        </h3>
         <div className="space-y-3">
           {suggestions.map((suggestion) => (
             <div key={suggestion.id} className="bg-gray-50 rounded-lg p-3">

@@ -50,7 +50,10 @@ export function EditPostDialog({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSave} className="bg-primary hover:bg-primary/90">
+          <Button
+            onClick={handleSave}
+            className="bg-primary hover:bg-primary/90"
+          >
             Save Changes
           </Button>
         </DialogFooter>

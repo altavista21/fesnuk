@@ -11,31 +11,42 @@ export interface Notification {
 interface NotificationContextType {
   notifications: Notification[];
   notificationCount: number;
-  addNotification: (notification: Omit<Notification, "id" | "timestamp">) => void;
+  addNotification: (
+    notification: Omit<Notification, "id" | "timestamp">,
+  ) => void;
   clearNotification: (id: string) => void;
   clearAllNotifications: () => void;
 }
 
-const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
+const NotificationContext = createContext<NotificationContextType | undefined>(
+  undefined,
+);
 
-export function NotificationProvider({ children }: { children: React.ReactNode }) {
+export function NotificationProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  const addNotification = useCallback((notification: Omit<Notification, "id" | "timestamp">) => {
-    const id = Math.random().toString(36).substr(2, 9);
-    setNotifications((prev) => [
-      {
-        ...notification,
-        id,
-        timestamp: new Date(),
-      },
-      ...prev,
-    ]);
+  const addNotification = useCallback(
+    (notification: Omit<Notification, "id" | "timestamp">) => {
+      const id = Math.random().toString(36).substr(2, 9);
+      setNotifications((prev) => [
+        {
+          ...notification,
+          id,
+          timestamp: new Date(),
+        },
+        ...prev,
+      ]);
 
-    setTimeout(() => {
-      clearNotification(id);
-    }, 5000);
-  }, []);
+      setTimeout(() => {
+        clearNotification(id);
+      }, 5000);
+    },
+    [],
+  );
 
   const clearNotification = useCallback((id: string) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
@@ -63,7 +74,9 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
 export function useNotifications() {
   const context = useContext(NotificationContext);
   if (context === undefined) {
-    throw new Error("useNotifications must be used within a NotificationProvider");
+    throw new Error(
+      "useNotifications must be used within a NotificationProvider",
+    );
   }
   return context;
 }

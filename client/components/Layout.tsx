@@ -11,7 +11,10 @@ export function Layout({ children }: LayoutProps) {
   const { backgroundColor } = useUser();
 
   return (
-    <div style={{ backgroundColor }} className="min-h-screen transition-colors duration-300">
+    <div
+      style={{ backgroundColor }}
+      className="min-h-screen transition-colors duration-300"
+    >
       <Header />
       <div className="flex">
         <Sidebar />

@@ -1,4 +1,10 @@
-import { Heart, MessageCircle, Share2, MoreHorizontal, Edit2 } from "lucide-react";
+import {
+  Heart,
+  MessageCircle,
+  Share2,
+  MoreHorizontal,
+  Edit2,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { EditPostDialog } from "./EditPostDialog";
@@ -23,7 +29,17 @@ interface PostProps {
   shares: number;
 }
 
-export function Post({ id, author, avatar, timestamp, content: initialContent, image, likes: initialLikes, comments: initialComments, shares }: PostProps) {
+export function Post({
+  id,
+  author,
+  avatar,
+  timestamp,
+  content: initialContent,
+  image,
+  likes: initialLikes,
+  comments: initialComments,
+  shares,
+}: PostProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(initialLikes);
   const [commentCount, setCommentCount] = useState(initialComments);
@@ -83,7 +99,10 @@ export function Post({ id, author, avatar, timestamp, content: initialContent, i
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setEditOpen(true)} className="flex items-center gap-2 cursor-pointer">
+              <DropdownMenuItem
+                onClick={() => setEditOpen(true)}
+                className="flex items-center gap-2 cursor-pointer"
+              >
                 <Edit2 className="w-4 h-4" />
                 <span>Edit Post</span>
               </DropdownMenuItem>
@@ -104,9 +123,15 @@ export function Post({ id, author, avatar, timestamp, content: initialContent, i
         </div>
 
         <div className="px-4 py-3 border-y border-gray-100 text-xs text-gray-600 flex gap-4">
-          <span className="cursor-pointer hover:underline">{likeCount} likes</span>
-          <span className="cursor-pointer hover:underline">{commentCount} comments</span>
-          <span className="cursor-pointer hover:underline">{shares} shares</span>
+          <span className="cursor-pointer hover:underline">
+            {likeCount} likes
+          </span>
+          <span className="cursor-pointer hover:underline">
+            {commentCount} comments
+          </span>
+          <span className="cursor-pointer hover:underline">
+            {shares} shares
+          </span>
         </div>
 
         <div className="px-4 py-2 flex gap-2">
@@ -115,7 +140,9 @@ export function Post({ id, author, avatar, timestamp, content: initialContent, i
             className="flex-1 justify-center gap-2 text-gray-700 hover:bg-gray-50"
             onClick={handleLike}
           >
-            <Heart className={`w-5 h-5 ${isLiked ? "fill-red-500 text-red-500" : ""}`} />
+            <Heart
+              className={`w-5 h-5 ${isLiked ? "fill-red-500 text-red-500" : ""}`}
+            />
             <span className="text-sm">Like</span>
           </Button>
           <Button
@@ -126,7 +153,10 @@ export function Post({ id, author, avatar, timestamp, content: initialContent, i
             <MessageCircle className="w-5 h-5" />
             <span className="text-sm">Comment</span>
           </Button>
-          <Button variant="ghost" className="flex-1 justify-center gap-2 text-gray-700 hover:bg-gray-50">
+          <Button
+            variant="ghost"
+            className="flex-1 justify-center gap-2 text-gray-700 hover:bg-gray-50"
+          >
             <Share2 className="w-5 h-5" />
             <span className="text-sm">Share</span>
           </Button>

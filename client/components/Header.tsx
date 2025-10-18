@@ -1,4 +1,11 @@
-import { Search, MessageCircle, Bell, Users, Settings, LogOut } from "lucide-react";
+import {
+  Search,
+  MessageCircle,
+  Bell,
+  Users,
+  Settings,
+  LogOut,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { ProfileSettings } from "./ProfileSettings";
@@ -24,7 +31,8 @@ export function Header() {
   const [messagesOpen, setMessagesOpen] = useState(false);
   const { username } = useUser();
   const { logout } = useAuth();
-  const { notifications, notificationCount, clearAllNotifications } = useNotifications();
+  const { notifications, notificationCount, clearAllNotifications } =
+    useNotifications();
 
   const handleLogout = () => {
     logout();
@@ -72,7 +80,9 @@ export function Header() {
               <PopoverContent align="end" className="w-80">
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-gray-900">Notifications</h3>
+                    <h3 className="font-semibold text-gray-900">
+                      Notifications
+                    </h3>
                     {notificationCount > 0 && (
                       <Button
                         variant="ghost"
@@ -85,7 +95,9 @@ export function Header() {
                     )}
                   </div>
                   {notifications.length === 0 ? (
-                    <p className="text-sm text-gray-600 text-center py-4">No notifications yet</p>
+                    <p className="text-sm text-gray-600 text-center py-4">
+                      No notifications yet
+                    </p>
                   ) : (
                     <div className="space-y-2 max-h-96 overflow-y-auto">
                       {notifications.map((notif) => (
@@ -93,7 +105,9 @@ export function Header() {
                           key={notif.id}
                           className="p-3 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors"
                         >
-                          <p className="text-sm text-gray-800">{notif.message}</p>
+                          <p className="text-sm text-gray-800">
+                            {notif.message}
+                          </p>
                           <p className="text-xs text-gray-500 mt-1">
                             {notif.timestamp.toLocaleTimeString()}
                           </p>
@@ -109,7 +123,9 @@ export function Header() {
               <Users className="w-5 h-5" />
             </Button>
             <div className="flex items-center gap-2 pl-4 border-l border-gray-200">
-              <span className="text-sm font-medium text-gray-700">{username}</span>
+              <span className="text-sm font-medium text-gray-700">
+                {username}
+              </span>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="h-8 w-8">

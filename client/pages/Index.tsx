@@ -24,7 +24,8 @@ const initialPosts: FeedPost[] = [
     timestamp: "2 hours ago",
     content:
       "Just finished an amazing project! So excited to share it with everyone. Check out what we've been working on! 🚀",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
     likes: 234,
     comments: 28,
     shares: 15,
@@ -36,7 +37,8 @@ const initialPosts: FeedPost[] = [
     timestamp: "4 hours ago",
     content:
       "Beautiful sunset at the beach today. Nature never ceases to amaze me! 🌅",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=400&fit=crop",
     likes: 512,
     comments: 67,
     shares: 42,
@@ -59,7 +61,8 @@ const initialPosts: FeedPost[] = [
     timestamp: "8 hours ago",
     content:
       "Excited to announce that I've joined a new team! Looking forward to this new adventure and growing with amazing people. 🎉",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
+    image:
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop",
     likes: 458,
     comments: 92,
     shares: 67,
@@ -85,7 +88,11 @@ export default function Index() {
     const newPost: FeedPost = {
       id: posts.length + 1,
       author: username,
-      avatar: username.split(' ').map(n => n[0]).join('').toUpperCase(),
+      avatar: username
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase(),
       timestamp: "now",
       content,
       image,

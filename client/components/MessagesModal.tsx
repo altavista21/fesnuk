@@ -17,7 +17,13 @@ interface MessagesModalProps {
 }
 
 export function MessagesModal({ open, onOpenChange }: MessagesModalProps) {
-  const { conversations, currentConversation, setCurrentConversation, sendMessage, markAsRead } = useMessaging();
+  const {
+    conversations,
+    currentConversation,
+    setCurrentConversation,
+    sendMessage,
+    markAsRead,
+  } = useMessaging();
   const [messageText, setMessageText] = useState("");
 
   const handleSendMessage = () => {
@@ -65,7 +71,9 @@ export function MessagesModal({ open, onOpenChange }: MessagesModalProps) {
                     key={message.id}
                     className={cn(
                       "flex gap-3",
-                      message.senderId === "you" ? "justify-end" : "justify-start"
+                      message.senderId === "you"
+                        ? "justify-end"
+                        : "justify-start",
                     )}
                   >
                     <div
@@ -73,14 +81,16 @@ export function MessagesModal({ open, onOpenChange }: MessagesModalProps) {
                         "max-w-xs px-4 py-2 rounded-lg",
                         message.senderId === "you"
                           ? "bg-primary text-white rounded-br-none"
-                          : "bg-gray-100 text-gray-900 rounded-bl-none"
+                          : "bg-gray-100 text-gray-900 rounded-bl-none",
                       )}
                     >
                       <p className="text-sm">{message.text}</p>
                       <p
                         className={cn(
                           "text-xs mt-1",
-                          message.senderId === "you" ? "text-blue-100" : "text-gray-500"
+                          message.senderId === "you"
+                            ? "text-blue-100"
+                            : "text-gray-500",
                         )}
                       >
                         {message.timestamp.toLocaleTimeString([], {
@@ -119,7 +129,9 @@ export function MessagesModal({ open, onOpenChange }: MessagesModalProps) {
 
             <div className="flex-1 overflow-y-auto p-4">
               {conversations.length === 0 ? (
-                <p className="text-center text-gray-500 py-8">No conversations yet</p>
+                <p className="text-center text-gray-500 py-8">
+                  No conversations yet
+                </p>
               ) : (
                 <div className="space-y-2">
                   {conversations.map((conv) => (

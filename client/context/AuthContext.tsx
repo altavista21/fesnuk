@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const savedUsers = JSON.parse(localStorage.getItem("fesnuk_users") || "[]");
     const foundUser = savedUsers.find(
-      (u: any) => u.email === email && u.password === password
+      (u: any) => u.email === email && u.password === password,
     );
 
     if (!foundUser) {
