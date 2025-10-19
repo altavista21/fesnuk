@@ -1,7 +1,7 @@
 import { Layout } from "@/components/Layout";
 import { PostComposer } from "@/components/PostComposer";
 import { Post } from "@/components/Post";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "@/context/UserContext";
 
 interface FeedPost {
@@ -81,12 +81,31 @@ const initialPosts: FeedPost[] = [
 ];
 
 export default function Index() {
-  const [posts, setPosts] = useState<FeedPost[]>(initialPosts);
+  const [posts, setPosts] = useState<FeedPost[]>([]);
   const { username } = useUser();
+
+  useEffect(() => {
+    const savedPosts = localStorage.getItem("fesnuk_posts");
+    if (savedPosts) {
+      try {
+        setPosts(JSON.parse(savedPosts));
+      } catch (e) {
+        setPosts(initialPosts);
+      }
+    } else {
+      setPosts(initialPosts);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (posts.length > 0) {
+      localStorage.setItem("fesnuk_posts", JSON.stringify(posts));
+    }
+  }, [posts]);
 
   const handleNewPost = (content: string, image?: string) => {
     const newPost: FeedPost = {
-      id: posts.length + 1,
+      id: Date.now(),
       author: username,
       avatar: username
         .split(" ")
