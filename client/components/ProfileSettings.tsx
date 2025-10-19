@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useUser } from "@/context/UserContext";
+import { X } from "lucide-react";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -30,6 +32,30 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
   const { username, setUsername, backgroundColor, setBackgroundColor } =
     useUser();
   const [tempUsername, setTempUsername] = useState(username);
+
+  const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const validTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+    if (!validTypes.includes(file.type)) {
+      toast.error("Only images (JPG, PNG, GIF, WebP) are supported");
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast.error("File size must be less than 5MB");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setProfilePhoto(event.target?.result as string);
+      toast.success("Profile photo updated!");
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSave = () => {
     setUsername(tempUsername);
