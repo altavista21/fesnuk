@@ -37,7 +37,9 @@ export function ForgotPasswordModal({
         throw new Error("Please enter your email");
       }
 
-      const savedUsers = JSON.parse(localStorage.getItem("fesnuk_users") || "[]");
+      const savedUsers = JSON.parse(
+        localStorage.getItem("fesnuk_users") || "[]",
+      );
       const userExists = savedUsers.some((u: any) => u.email === email);
 
       if (!userExists) {
@@ -72,7 +74,7 @@ export function ForgotPasswordModal({
 
       onReset(email, newPassword);
       toast.success("Password reset successfully!");
-      
+
       setEmail("");
       setNewPassword("");
       setConfirmPassword("");

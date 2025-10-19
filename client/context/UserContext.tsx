@@ -44,7 +44,14 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <UserContext.Provider
-      value={{ username, setUsername, backgroundColor, setBackgroundColor, profilePhoto, setProfilePhoto }}
+      value={{
+        username,
+        setUsername,
+        backgroundColor,
+        setBackgroundColor,
+        profilePhoto,
+        setProfilePhoto,
+      }}
     >
       {children}
     </UserContext.Provider>
