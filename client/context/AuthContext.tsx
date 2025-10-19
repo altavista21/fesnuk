@@ -12,6 +12,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, name: string) => Promise<void>;
   logout: () => void;
+  resetPassword: (email: string, newPassword: string) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -94,6 +95,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem("fesnuk_user");
   };
 
+  const resetPassword = async (email: string, newPassword: string) => {
+    const savedUsers = JSON.parse(localStorage.getItem("fesnuk_users") || "[]");
+    const userIndex = savedUsers.findIndex((u: any) => u.email === email);
+
+    if (userIndex === -1) {
+      throw new Error("User not found");
+    }
+
+    savedUsers[userIndex].password = newPassword;
+    localStorage.setItem("fesnuk_users", JSON.stringify(savedUsers));
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -102,6 +115,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         login,
         signup,
         logout,
+        resetPassword,
       }}
     >
       {children}
