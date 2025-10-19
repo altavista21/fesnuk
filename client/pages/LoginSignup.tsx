@@ -2,15 +2,17 @@ import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ForgotPasswordModal } from "@/components/ForgotPasswordModal";
 import { toast } from "sonner";
 
 export default function LoginSignup() {
   const [isSignup, setIsSignup] = useState(false);
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { login, signup } = useAuth();
+  const { login, signup, resetPassword } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,6 +98,17 @@ export default function LoginSignup() {
             </Button>
           </form>
 
+          <div className="mt-4 text-center">
+            {!isSignup && (
+              <button
+                onClick={() => setForgotPasswordOpen(true)}
+                className="text-sm text-primary hover:underline"
+              >
+                Forgot password?
+              </button>
+            )}
+          </div>
+
           <div className="mt-6 text-center">
             <p className="text-gray-600 text-sm">
               {isSignup ? "Already have an account?" : "Don't have an account?"}
@@ -114,6 +127,12 @@ export default function LoginSignup() {
           </div>
         </div>
       </div>
+
+      <ForgotPasswordModal
+        open={forgotPasswordOpen}
+        onOpenChange={setForgotPasswordOpen}
+        onReset={resetPassword}
+      />
     </div>
   );
 }
