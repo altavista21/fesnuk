@@ -1,1 +1,1 @@
-Ini adalah percobaan membuat sosial media facebook
+Ini hanyalah website meme facebook. Dibuat untuk Indonesia
