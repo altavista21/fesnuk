@@ -12,7 +12,7 @@ export function PostComposer({ onPost }: PostComposerProps) {
   const [content, setContent] = useState("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { username } = useUser();
+  const { username, profilePhoto } = useUser();
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -60,12 +60,16 @@ export function PostComposer({ onPost }: PostComposerProps) {
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 mb-4">
       <div className="flex gap-4 mb-4">
-        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-          {username
-            .split(" ")
-            .map((n) => n[0])
-            .join("")
-            .toUpperCase()}
+        <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 overflow-hidden">
+          {profilePhoto ? (
+            <img src={profilePhoto} alt="profile" className="w-full h-full object-cover" />
+          ) : (
+            username
+              .split(" ")
+              .map((n) => n[0])
+              .join("")
+              .toUpperCase()
+          )}
         </div>
         <input
           type="text"
