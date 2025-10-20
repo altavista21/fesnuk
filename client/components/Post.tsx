@@ -47,7 +47,7 @@ export function Post({
   const [editOpen, setEditOpen] = useState(false);
   const [content, setContent] = useState(initialContent);
   const { addNotification } = useNotifications();
-  const { username } = useUser();
+  const { username, profilePhoto } = useUser();
   const isOwnPost = author === username;
 
   const handleSaveEdit = (newContent: string) => {
@@ -87,8 +87,12 @@ export function Post({
       <div className="bg-white rounded-lg border border-gray-200 mb-4 overflow-hidden">
         <div className="p-4 border-b border-gray-100 flex items-start justify-between">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-              {avatar}
+            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 overflow-hidden">
+              {isOwnPost && profilePhoto ? (
+                <img src={profilePhoto} alt="profile" className="w-full h-full object-cover" />
+              ) : (
+                avatar
+              )}
             </div>
             <div>
               <div className="font-semibold text-gray-900">{author}</div>
