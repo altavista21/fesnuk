@@ -33,7 +33,8 @@ export default function LoginSignup() {
         toast.success("Logged in successfully!");
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "An error occurred";
+      const errorMessage =
+        error instanceof Error ? error.message : "An error occurred";
       toast.error(errorMessage);
     } finally {
       setIsLoading(false);

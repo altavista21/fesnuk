@@ -19,7 +19,9 @@ export default function Friends() {
       <div className="p-4 md:p-6">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900">Friends</h1>
-          <p className="text-gray-600 mt-2">You have {friends.length} friends</p>
+          <p className="text-gray-600 mt-2">
+            You have {friends.length} friends
+          </p>
         </div>
 
         <div className="space-y-3">
@@ -33,8 +35,12 @@ export default function Friends() {
                   {friend.avatar}
                 </div>
                 <div>
-                  <div className="font-semibold text-gray-900">{friend.name}</div>
-                  <div className="text-xs text-gray-600">{friend.mutualFriends} mutual friends</div>
+                  <div className="font-semibold text-gray-900">
+                    {friend.name}
+                  </div>
+                  <div className="text-xs text-gray-600">
+                    {friend.mutualFriends} mutual friends
+                  </div>
                 </div>
               </div>
               <div className="flex gap-2">

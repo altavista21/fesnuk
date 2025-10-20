@@ -29,8 +29,14 @@ const bgColorOptions = [
 ];
 
 export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
-  const { username, setUsername, backgroundColor, setBackgroundColor, profilePhoto, setProfilePhoto } =
-    useUser();
+  const {
+    username,
+    setUsername,
+    backgroundColor,
+    setBackgroundColor,
+    profilePhoto,
+    setProfilePhoto,
+  } = useUser();
   const [tempUsername, setTempUsername] = useState(username);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -74,12 +80,18 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
         </DialogHeader>
         <div className="grid gap-6 py-4">
           <div className="space-y-3">
-            <label className="text-sm font-medium text-gray-900">Profile Photo</label>
+            <label className="text-sm font-medium text-gray-900">
+              Profile Photo
+            </label>
             <div className="flex items-center gap-4">
               <div className="relative">
                 {profilePhoto ? (
                   <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-200">
-                    <img src={profilePhoto} alt="profile" className="w-full h-full object-cover" />
+                    <img
+                      src={profilePhoto}
+                      alt="profile"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 ) : (
                   <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-white text-lg font-bold">
@@ -108,7 +120,9 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                 >
                   {profilePhoto ? "Change Photo" : "Upload Photo"}
                 </Button>
-                <p className="text-xs text-gray-500 mt-2">Max 5MB, JPG/PNG/GIF</p>
+                <p className="text-xs text-gray-500 mt-2">
+                  Max 5MB, JPG/PNG/GIF
+                </p>
               </div>
             </div>
             <input
@@ -121,7 +135,9 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-900">Username</label>
+            <label className="text-sm font-medium text-gray-900">
+              Username
+            </label>
             <input
               type="text"
               value={tempUsername}
@@ -132,7 +148,9 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
           </div>
 
           <div className="space-y-3">
-            <label className="text-sm font-medium text-gray-900">Background Color</label>
+            <label className="text-sm font-medium text-gray-900">
+              Background Color
+            </label>
             <div className="grid grid-cols-4 gap-2">
               {bgColorOptions.map((option) => (
                 <button
@@ -141,8 +159,10 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                   className="p-4 rounded-lg border-2 transition-all hover:scale-105"
                   style={{
                     backgroundColor: option.value,
-                    borderColor: backgroundColor === option.value ? "#ff8c00" : "#e5e7eb",
-                    borderWidth: backgroundColor === option.value ? "2px" : "1px",
+                    borderColor:
+                      backgroundColor === option.value ? "#ff8c00" : "#e5e7eb",
+                    borderWidth:
+                      backgroundColor === option.value ? "2px" : "1px",
                   }}
                   title={option.name}
                 />
@@ -154,7 +174,10 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSave} className="bg-primary hover:bg-primary/90">
+          <Button
+            onClick={handleSave}
+            className="bg-primary hover:bg-primary/90"
+          >
             Save Settings
           </Button>
         </DialogFooter>
