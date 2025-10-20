@@ -21,7 +21,7 @@ import LoginSignup from "./pages/LoginSignup";
 
 const queryClient = new QueryClient();
 
-function ProtectedApp() {
+function ProtectedContent() {
   const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
@@ -58,7 +58,7 @@ function ProtectedApp() {
 
 const App = () => (
   <AuthProvider>
-    <ProtectedApp />
+    <ProtectedContent />
   </AuthProvider>
 );
 
