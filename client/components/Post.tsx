@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import { useState } from "react";
 import { EditPostDialog } from "./EditPostDialog";
 import { useNotifications } from "@/context/NotificationContext";
+import { useUser } from "@/context/UserContext";
 import { toast } from "sonner";
 import {
   DropdownMenu,
@@ -46,6 +47,8 @@ export function Post({
   const [editOpen, setEditOpen] = useState(false);
   const [content, setContent] = useState(initialContent);
   const { addNotification } = useNotifications();
+  const { username } = useUser();
+  const isOwnPost = author === username;
 
   const handleSaveEdit = (newContent: string) => {
     setContent(newContent);
@@ -92,25 +95,27 @@ export function Post({
               <div className="text-xs text-gray-600">{timestamp}</div>
             </div>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <MoreHorizontal className="w-4 h-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                onClick={() => setEditOpen(true)}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <Edit2 className="w-4 h-4" />
-                <span>Edit Post</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="flex items-center gap-2 cursor-pointer text-red-600">
-                <span>Delete Post</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {isOwnPost && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <MoreHorizontal className="w-4 h-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onClick={() => setEditOpen(true)}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  <Edit2 className="w-4 h-4" />
+                  <span>Edit Post</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex items-center gap-2 cursor-pointer text-red-600">
+                  <span>Delete Post</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
 
         <div className="p-4">
