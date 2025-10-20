@@ -17,19 +17,20 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
+function initializeUser(): User | null {
+  try {
     const savedUser = localStorage.getItem("fesnuk_user");
     if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (e) {
-        console.error("Failed to parse saved user");
-      }
+      return JSON.parse(savedUser);
     }
-  }, []);
+  } catch (e) {
+    console.error("Failed to parse saved user");
+  }
+  return null;
+}
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(initializeUser);
 
   const login = async (email: string, password: string) => {
     if (!email || !password) {
