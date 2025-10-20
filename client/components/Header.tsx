@@ -13,6 +13,7 @@ import { MessagesModal } from "./MessagesModal";
 import { useUser } from "@/context/UserContext";
 import { useAuth } from "@/context/AuthContext";
 import { useNotifications } from "@/context/NotificationContext";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import {
   Popover,
@@ -29,7 +30,7 @@ import {
 export function Header() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [messagesOpen, setMessagesOpen] = useState(false);
-  const { username } = useUser();
+  const { username, profilePhoto } = useUser();
   const { logout } = useAuth();
   const { notifications, notificationCount, clearAllNotifications } =
     useNotifications();
@@ -122,10 +123,20 @@ export function Header() {
             <Button variant="ghost" size="icon">
               <Users className="w-5 h-5" />
             </Button>
-            <div className="flex items-center gap-2 pl-4 border-l border-gray-200">
+            <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
               <span className="text-sm font-medium text-gray-700">
                 {username}
               </span>
+              <div className={cn(
+                "w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0",
+                profilePhoto ? "bg-gray-200 overflow-hidden" : "bg-gradient-to-br from-primary to-primary/70"
+              )}>
+                {profilePhoto ? (
+                  <img src={profilePhoto} alt="profile" className="w-full h-full object-cover" />
+                ) : (
+                  username.split(" ").map(n => n[0]).join("").toUpperCase()
+                )}
+              </div>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="h-8 w-8">
