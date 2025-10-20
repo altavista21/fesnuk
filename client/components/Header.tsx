@@ -127,14 +127,26 @@ export function Header() {
               <span className="text-sm font-medium text-gray-700">
                 {username}
               </span>
-              <div className={cn(
-                "w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0",
-                profilePhoto ? "bg-gray-200 overflow-hidden" : "bg-gradient-to-br from-primary to-primary/70"
-              )}>
+              <div
+                className={cn(
+                  "w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0",
+                  profilePhoto
+                    ? "bg-gray-200 overflow-hidden"
+                    : "bg-gradient-to-br from-primary to-primary/70",
+                )}
+              >
                 {profilePhoto ? (
-                  <img src={profilePhoto} alt="profile" className="w-full h-full object-cover" />
+                  <img
+                    src={profilePhoto}
+                    alt="profile"
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
-                  username.split(" ").map(n => n[0]).join("").toUpperCase()
+                  username
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()
                 )}
               </div>
               <DropdownMenu>

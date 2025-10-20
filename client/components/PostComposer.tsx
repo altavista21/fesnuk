@@ -62,7 +62,11 @@ export function PostComposer({ onPost }: PostComposerProps) {
       <div className="flex gap-4 mb-4">
         <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 overflow-hidden">
           {profilePhoto ? (
-            <img src={profilePhoto} alt="profile" className="w-full h-full object-cover" />
+            <img
+              src={profilePhoto}
+              alt="profile"
+              className="w-full h-full object-cover"
+            />
           ) : (
             username
               .split(" ")

@@ -89,7 +89,11 @@ export function Post({
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 overflow-hidden">
               {isOwnPost && profilePhoto ? (
-                <img src={profilePhoto} alt="profile" className="w-full h-full object-cover" />
+                <img
+                  src={profilePhoto}
+                  alt="profile"
+                  className="w-full h-full object-cover"
+                />
               ) : (
                 avatar
               )}
