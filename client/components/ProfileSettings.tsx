@@ -29,9 +29,10 @@ const bgColorOptions = [
 ];
 
 export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
-  const { username, setUsername, backgroundColor, setBackgroundColor } =
+  const { username, setUsername, backgroundColor, setBackgroundColor, profilePhoto, setProfilePhoto } =
     useUser();
   const [tempUsername, setTempUsername] = useState(username);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handlePhotoSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -68,14 +69,59 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
         <DialogHeader>
           <DialogTitle>Profile Settings</DialogTitle>
           <DialogDescription>
-            Customize your username and background color.
+            Customize your profile, username, and background color.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-6 py-4">
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-gray-900">Profile Photo</label>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                {profilePhoto ? (
+                  <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-200">
+                    <img src={profilePhoto} alt="profile" className="w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="w-20 h-20 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-white text-lg font-bold">
+                    {tempUsername
+                      .split(" ")
+                      .map((n) => n[0])
+                      .join("")
+                      .toUpperCase()}
+                  </div>
+                )}
+                {profilePhoto && (
+                  <button
+                    onClick={() => setProfilePhoto(null)}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+              <div className="flex-1">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="text-sm"
+                >
+                  {profilePhoto ? "Change Photo" : "Upload Photo"}
+                </Button>
+                <p className="text-xs text-gray-500 mt-2">Max 5MB, JPG/PNG/GIF</p>
+              </div>
+            </div>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoSelect}
+              className="hidden"
+            />
+          </div>
+
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-900">
-              Username
-            </label>
+            <label className="text-sm font-medium text-gray-900">Username</label>
             <input
               type="text"
               value={tempUsername}
@@ -86,9 +132,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
           </div>
 
           <div className="space-y-3">
-            <label className="text-sm font-medium text-gray-900">
-              Background Color
-            </label>
+            <label className="text-sm font-medium text-gray-900">Background Color</label>
             <div className="grid grid-cols-4 gap-2">
               {bgColorOptions.map((option) => (
                 <button
@@ -97,10 +141,8 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
                   className="p-4 rounded-lg border-2 transition-all hover:scale-105"
                   style={{
                     backgroundColor: option.value,
-                    borderColor:
-                      backgroundColor === option.value ? "#0066ff" : "#e5e7eb",
-                    borderWidth:
-                      backgroundColor === option.value ? "2px" : "1px",
+                    borderColor: backgroundColor === option.value ? "#ff8c00" : "#e5e7eb",
+                    borderWidth: backgroundColor === option.value ? "2px" : "1px",
                   }}
                   title={option.name}
                 />
@@ -112,10 +154,7 @@ export function ProfileSettings({ open, onOpenChange }: ProfileSettingsProps) {
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button
-            onClick={handleSave}
-            className="bg-primary hover:bg-primary/90"
-          >
+          <Button onClick={handleSave} className="bg-primary hover:bg-primary/90">
             Save Settings
           </Button>
         </DialogFooter>

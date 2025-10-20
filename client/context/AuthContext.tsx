@@ -79,6 +79,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     savedUsers.push(newUser);
     localStorage.setItem("fesnuk_users", JSON.stringify(savedUsers));
+    localStorage.setItem("fesnuk_firstSignup", "true");
 
     const userData: User = {
       id: newUser.id,

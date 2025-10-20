@@ -86,14 +86,19 @@ export default function Index() {
 
   useEffect(() => {
     const savedPosts = localStorage.getItem("fesnuk_posts");
+    const isFirstSignup = localStorage.getItem("fesnuk_firstSignup");
+
     if (savedPosts) {
       try {
         setPosts(JSON.parse(savedPosts));
       } catch (e) {
-        setPosts(initialPosts);
+        setPosts(isFirstSignup ? [] : initialPosts);
       }
     } else {
-      setPosts(initialPosts);
+      setPosts(isFirstSignup ? [] : initialPosts);
+      if (isFirstSignup) {
+        localStorage.removeItem("fesnuk_firstSignup");
+      }
     }
   }, []);
 
