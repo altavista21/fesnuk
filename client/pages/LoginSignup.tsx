@@ -20,14 +20,21 @@ export default function LoginSignup() {
 
     try {
       if (isSignup) {
+        if (!email || !password || !name) {
+          throw new Error("Please fill in all fields");
+        }
         await signup(email, password, name);
         toast.success("Account created successfully!");
       } else {
+        if (!email || !password) {
+          throw new Error("Please enter both email and password");
+        }
         await login(email, password);
         toast.success("Logged in successfully!");
       }
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "An error occurred");
+      const errorMessage = error instanceof Error ? error.message : "An error occurred";
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
