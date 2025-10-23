@@ -1,1 +1,1 @@
-Ini hanyalah website meme facebook. Dibuat untuk Indonesia
+Ini hanyalah website meme facebook. Dibuat untuk hiburan
